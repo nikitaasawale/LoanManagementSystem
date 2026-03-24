@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: APIGateway
+    
+  cloud:
+    gateway:
+      routes:
+        - id: ADMINSERVICE
+          uri: lb://ADMINSERVICE
+          predicates:
+            - Path=/admin/**
+            
+        - id: AUTH SERVICE
+          uri: lb://CUSTOMERSERVICE
+          predicates:
+            - Path=/auth/**    
+               
+        - id: CUSTOMERSERVICE
+          uri: lb://CUSTOMERSERVICE
+          predicates:
+            - Path=/api/customer/**  
+            
+        - id: LOANSERVICE
+          uri: lb://LOANSERVICE
+          predicates:
+            - Path=/loan/v1**   
+            
+        - id: DOCUMENTSERVICE
+          uri: lb://DOCUMENTSERVICE
+          predicates:
+            - Path=/document/**  
+            
+        - id: NOTIFICATIONSERVICE
+          uri: lb://NOTIFICATIONSERVICE
+          predicates:
+            - Path=/mail/**          
+               
+            
+   
+server:
+  port: 8080
+  
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/           
+            
+        
+            
